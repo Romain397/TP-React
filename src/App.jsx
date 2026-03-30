@@ -2,18 +2,10 @@ import "./App.css";
 import Header from "./components/base/Header";
 import Footer from "./components/base/Footer";
 import StudentList from "./components/students/StudentList";
+import StudentForm from "./components/forms/StudentForm";
+import StudentFilters from "./components/filters/StudentFilters";
 import initialStudents from "./data/students";
 import { useState } from "react";
-import {
-  TextField,
-  Stack,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Button,
-  Chip,
-} from "@mui/material";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -194,180 +186,26 @@ function App() {
     <main className="app">
       <Header />
 
-      <Stack
-        component="form"
+      <StudentForm
+        form={form}
+        onChange={handleFormChange}
+        onAddSkill={handleAddSkill}
+        onRemoveSkill={handleRemoveSkill}
         onSubmit={handleAddOrUpdateStudent}
-        spacing={2}
-        direction={{ xs: "column", md: "row" }}
-        useFlexGap
-        flexWrap="wrap"
-        sx={{ mb: 2 }}
-      >
-        <TextField
-          label="Prénom"
-          name="firstName"
-          value={form.firstName}
-          onChange={handleFormChange}
-          fullWidth
-          required
-        />
-        <TextField
-          label="Nom"
-          name="lastName"
-          value={form.lastName}
-          onChange={handleFormChange}
-          fullWidth
-          required
-        />
-        <TextField
-          label="Poste recherché"
-          name="title"
-          value={form.title}
-          onChange={handleFormChange}
-          fullWidth
-          required
-        />
-        <TextField
-          label="Localisation"
-          name="location"
-          value={form.location}
-          onChange={handleFormChange}
-          fullWidth
-          required
-        />
-        <TextField
-          label="Bio"
-          name="bio"
-          value={form.bio}
-          onChange={handleFormChange}
-          fullWidth
-          required
-        />
-        <TextField
-          label="Compétence"
-          name="skillName"
-          value={form.skillName}
-          onChange={handleFormChange}
-          fullWidth
-        />
-        <FormControl fullWidth>
-          <InputLabel>Niveau</InputLabel>
-          <Select
-            name="skillLevel"
-            value={form.skillLevel}
-            label="Niveau"
-            onChange={handleFormChange}
-          >
-            <MenuItem value="beginner">Débutant</MenuItem>
-            <MenuItem value="intermediate">Intermédiaire</MenuItem>
-            <MenuItem value="advanced">Avancé</MenuItem>
-          </Select>
-        </FormControl>
-        <Button type="button" variant="outlined" onClick={handleAddSkill}>
-          Ajouter compétence
-        </Button>
-        {form.skills.length > 0 && (
-          <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-            {form.skills.map((skill, index) => (
-              <Chip
-                key={`${skill.name}-${index}`}
-                label={`${skill.name} (${skill.level})`}
-                onDelete={() => handleRemoveSkill(index)}
-              />
-            ))}
-          </Stack>
-        )}
-        <TextField
-          label="Projet"
-          name="projectName"
-          value={form.projectName}
-          onChange={handleFormChange}
-          fullWidth
-          required
-        />
-        <TextField
-          label="Tech projet"
-          name="projectTech"
-          value={form.projectTech}
-          onChange={handleFormChange}
-          fullWidth
-          required
-        />
-        <TextField
-          label="Description projet"
-          name="projectDesc"
-          value={form.projectDesc}
-          onChange={handleFormChange}
-          fullWidth
-          required
-        />
-        <Button type="submit" variant="contained">
-          {editId ? "Modifier" : "Ajouter"}
-        </Button>
-        {editId && (
-          <Button variant="text" onClick={handleCancelEdit}>
-            Annuler
-          </Button>
-        )}
-      </Stack>
+        editId={editId}
+        onCancel={handleCancelEdit}
+      />
 
-      <div className="search">
-        <TextField
-          label="Rechercher un étudiant"
-          variant="outlined"
-          fullWidth
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
-
-      <Stack direction={{ xs: "column", md: "row" }} spacing={2} sx={{ mb: 2 }}>
-        <FormControl fullWidth>
-          <InputLabel>Niveau de compétence</InputLabel>
-          <Select
-            value={levelFilter}
-            label="Niveau de compétence"
-            onChange={(e) => setLevelFilter(e.target.value)}
-          >
-            <MenuItem value="all">Tous</MenuItem>
-            <MenuItem value="advanced">Avancé</MenuItem>
-            <MenuItem value="intermediate">Intermédiaire</MenuItem>
-            <MenuItem value="beginner">Débutant</MenuItem>
-          </Select>
-        </FormControl>
-
-        <FormControl fullWidth>
-          <InputLabel>Compétence</InputLabel>
-          <Select
-            value={skillFilter}
-            label="Compétence"
-            onChange={(e) => setSkillFilter(e.target.value)}
-          >
-            <MenuItem value="all">Toutes</MenuItem>
-            <MenuItem value="React">React</MenuItem>
-            <MenuItem value="Node.js">Node.js</MenuItem>
-            <MenuItem value="CSS">CSS</MenuItem>
-            <MenuItem value="Python">Python</MenuItem>
-            <MenuItem value="JavaScript">JavaScript</MenuItem>
-          </Select>
-        </FormControl>
-
-        <FormControl fullWidth>
-          <InputLabel>Technologie de projet</InputLabel>
-          <Select
-            value={techFilter}
-            label="Technologie de projet"
-            onChange={(e) => setTechFilter(e.target.value)}
-          >
-            <MenuItem value="all">Toutes</MenuItem>
-            <MenuItem value="React">React</MenuItem>
-            <MenuItem value="Node.js">Node.js</MenuItem>
-            <MenuItem value="CSS">CSS</MenuItem>
-            <MenuItem value="Python">Python</MenuItem>
-            <MenuItem value="JavaScript">JavaScript</MenuItem>
-          </Select>
-        </FormControl>
-      </Stack>
+      <StudentFilters
+        search={search}
+        onSearchChange={(e) => setSearch(e.target.value)}
+        levelFilter={levelFilter}
+        skillFilter={skillFilter}
+        techFilter={techFilter}
+        onLevelChange={(e) => setLevelFilter(e.target.value)}
+        onSkillChange={(e) => setSkillFilter(e.target.value)}
+        onTechChange={(e) => setTechFilter(e.target.value)}
+      />
 
       <StudentList
         students={filteredStudents}
