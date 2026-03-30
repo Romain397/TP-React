@@ -1,0 +1,95 @@
+:root {
+  --text: #dbe2f3;
+  --text-h: #f8fafc;
+  --muted: #94a3b8;
+  --bg: #0b1020;
+  --border: rgba(148, 163, 184, 0.2);
+  --code-bg: #10172a;
+  --accent: #38bdf8;
+  --accent-strong: #e2e8f0;
+  --accent-bg: rgba(56, 189, 248, 0.2);
+  --shadow:
+    0 18px 50px -30px rgba(2, 6, 23, 0.9),
+    0 10px 24px -16px rgba(2, 6, 23, 0.8);
+
+  --sans: "Manrope", "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+  --heading: "Space Grotesk", "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", "Fira Code", ui-monospace, Consolas, monospace;
+
+  font: 17px/150% var(--sans);
+  letter-spacing: 0.2px;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(900px 500px at 0% 0%, rgba(56, 189, 248, 0.18), transparent 60%),
+    radial-gradient(800px 500px at 100% 0%, rgba(34, 197, 94, 0.14), transparent 55%),
+    radial-gradient(1000px 600px at 20% 100%, rgba(248, 113, 113, 0.12), transparent 60%),
+    #0b1020;
+  color: var(--text);
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+h1 {
+  font-size: clamp(32px, 3.2vw, 52px);
+  letter-spacing: -1.2px;
+  margin: 28px 0 12px;
+  @media (max-width: 1024px) {
+    margin: 18px 0 10px;
+  }
+}
+h2 {
+  font-size: 22px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
+}
+p {
+  margin: 0;
+}
+
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 4px;
+  color: var(--text-h);
+}
+
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}
